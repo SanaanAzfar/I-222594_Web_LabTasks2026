@@ -1,0 +1,169 @@
+
+@media (max-width: 767px) {
+ body{
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+}
+
+.navbar{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #1e3a8a;
+flex-direction: row;
+flex-wrap: wrap;
+flex: 100%;
+
+}
+.navbutton{
+background-color: #1e3a8a;
+color: white;
+width: 500px;
+}
+.cardsbar{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: 2vw;
+flex: 100%;
+}
+
+.activitycard{
+background-color: #1d4ed8;
+color:white;
+ ;
+height: 5vh;
+width: 500px;
+text-align: center ;
+align-items: center;
+border-radius: 8px;
+margin-top: 2vh;
+}
+
+.gallerybar{
+margin-top: 50px;
+display: grid;
+justify-content: center;
+align-items: center;
+ grid-template-columns: 1fr ;
+}
+.galleryimage{
+width: 500px;
+border-radius: 8px;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 1023px)  {
+ body{
+font-family: Arial, Helvetica, sans-serif;
+font-size: 15px;
+}
+
+
+    .navbar{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #1e3a8a;
+gap: 200px;
+height: 5vh;
+}
+.navbutton{
+background-color: #1e3a8a;
+color: white;
+
+}
+.cardsbar{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: 2vw;
+flex: 50%;
+}
+
+.activitycard{
+background-color: #1d4ed8;
+color:white;
+height: 50px;
+width: 400px;
+text-align: center ;
+align-items: center;
+border-radius: 8px;
+margin-top: 2vh;
+}
+
+.gallerybar{
+margin-top: 50px;
+display: grid;
+justify-content: center;
+align-items: center;
+ grid-template-columns: 1fr 1fr 1fr;
+}
+.galleryimage{
+width: 300px;border-radius: 8px;
+}
+
+
+
+}
+
+@media (width >=1024px) {
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+font-size: 17px;
+}
+
+
+.navbar{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #1e3a8a;
+gap: 20vw;
+height: 5vh;
+}
+.navbutton{
+background-color: #1e3a8a;
+color: white;
+
+}
+.cardsbar{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: 2vw;
+flex: 33.3%;
+}
+
+.activitycard{
+background-color: #1d4ed8;
+color:white;
+height: 50px;
+width: 500px;
+text-align: center ;
+align-items: center;
+border-radius: 8px;
+margin-top: 2vh;
+}
+
+.gallerybar{
+margin-top: 50px;
+display: grid;
+justify-content: center;
+align-items: center;
+ grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.galleryimage{
+width: 370px;border-radius: 8px;
+}
+
+
+}
