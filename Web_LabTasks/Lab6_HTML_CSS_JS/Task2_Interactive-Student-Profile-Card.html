@@ -1,0 +1,46 @@
+<header>
+    <title>Interactive Student Profile Card</title>
+    <h1>Interactive Student Profile Card</h1>
+</header>
+<div class="Card">
+    <div class="inside">
+        <p><strong>Name:</strong> Sanaan Azfar</p>
+        <p><strong>Registeration No:</strong> I22-2594</p>
+        <p><strong>Department:</strong> Software Engineering</p>
+        <img src="https://i.pravatar.cc/150" alt="profile">
+        <button onclick="Show()">Show More</button>
+        <div id="11" hidden>
+            <p><strong>Hobbies:</strong> gamming, reading</p>
+            <p><strong>Skills:</strong> 3d modeling, Animation, Web Dev, Game Dev</p>
+            <p><strong>Emails:</strong> sanaanazfar742004@gmail.com</p>
+        <div>
+
+            </div>
+        </div>
+        <style>
+            .Card {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                align-self: center;
+            }
+
+            .inside {
+                border: 2px solid black;
+                display: inline-block;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+
+        <script>
+            function Show() {
+                var x=document.getElementById("11");
+                if (!x.checkVisibility())
+                document.getElementById("11").hidden = false;
+                else
+                {
+                document.getElementById("11").hidden = true;
+                }
+            }
+        </script>

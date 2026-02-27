@@ -1,0 +1,102 @@
+<header>
+    <title>Responsive Real Time Form Validation System</title>
+<h1>Responsive Real Time Form Validation System</h1>
+</header>
+<form>
+<input type="text" name="Name" placeholder="Enter Name" oninput="namevalid()" required/><br>
+<span name="nameErr" oninput="emailvalid()" hidden >Minimum 3 characters allowed</span><br>
+<input type="email" name="Email" placeholder="Enter Email"  required/><br>
+<span name="emailErr" hidden>Email must contain @ and .</span><br>
+<input type="password" oninput="passwordvalid()" name="Password" placeholder="Enter password"  required/><br>
+<span name="passErr"hidden>≥ 6 chars + number</span><br>
+<input type="password" name="REpassword" placeholder="Re-enter password"  oninput="repasswordvalid()" required/><br>
+<span name="repassErr"hidden>Passwords Must match</span><br>
+<input type="number" name="Age" placeholder="Enter Age"  min="1" value="1" oninput="repasswordvalid()" required/><br>
+<span name="numErr"hidden>Age must be between 18-60</span><br>
+<input type="submit" value="Submit"/>
+</form>
+
+<style>
+span{
+color: red;
+}
+.invalid{
+border: 2px solid;
+border-color: red;
+outline: none;
+}
+
+.valid{
+border: 2px solid;
+border-color: green;
+outline: none;
+}
+</style>
+
+<script>
+var email =document.getElementsByName("Email");
+var password =document.getElementsByName("Password");
+var age =document.getElementsByName("Age");
+function namevalid(){
+var name =document.getElementsByName("Name")[0];
+var err =document.getElementsByName("nameErr")[0];
+    if(name.value.length<3)
+{
+name.className="invalid";
+err.hidden=true;
+}
+else{name.className="valid";}
+err.hidden=false;
+};
+    function emailvalid() {
+        var email = document.getElementsByName("Email")[0];
+        var err = document.getElementsByName("emailErr")[0];
+        if (email.value.indexOf("@") === -1 || email.value.indexOf(".") === -1) {
+            email.className = "invalid";
+            err.hidden = false;
+        } else {
+            email.className = "valid";
+            err.hidden = true;
+        }
+    }
+
+    function passwordvalid() {
+        var password = document.getElementsByName("Password")[0];
+        var err = document.getElementsByName("passErr")[0];
+        var hasNumber = /\d/.test(password.value);
+        if (password.value.length < 6 || !hasNumber) {
+            password.className = "invalid";
+            err.hidden = false;
+        } else {
+            password.className = "valid";
+            err.hidden = true;
+        }
+        repasswordvalid();
+    }
+
+    function repasswordvalid() {
+        var password = document.getElementsByName("Password")[0];
+        var repassword = document.getElementsByName("REpassword")[0];
+        var err = document.getElementsByName("repassErr")[0];
+        if (repassword.value !== password.value || repassword.value === "") {
+            repassword.className = "invalid";
+            err.hidden = false;
+        } else {
+            repassword.className = "valid";
+            err.hidden = true;
+        }
+    }
+
+    function agevalid() {
+        var age = document.getElementsByName("Age")[0];
+        var err = document.getElementsByName("numErr")[0];
+        if (age.value < 18 || age.value > 60) {
+            age.className = "invalid";
+            err.hidden = false;
+        } else {
+            age.className = "valid";
+            err.hidden = true;
+        }
+    }
+</script>
+

@@ -1,0 +1,27 @@
+<header>
+    <title>Counter Application</title>
+    <h1>Counter Application</h1>
+</header>
+<h1 id="Num">0</h1>
+<button onclick="plus()">Increment</button>
+<button onclick="minus()">Decrement</button>
+<button onclick="reset()">Reset</button>
+
+<script>
+let count = 0;
+
+function plus() {
+    count++;
+    document.getElementById("Num").innerHTML = count;
+}
+
+function minus() {
+    count--;
+    document.getElementById("Num").innerHTML = count;
+}
+
+function reset() {
+    count = 0;
+    document.getElementById("Num").innerHTML = count;
+}
+</script>

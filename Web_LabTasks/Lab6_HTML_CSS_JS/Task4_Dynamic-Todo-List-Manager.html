@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List</title>
+  <style>
+    body { font-family: Arial; margin: 30px; }
+    .todo-box { max-width: 400px; margin: auto; border: 1px solid black; padding: 20px; }
+    input { width: 70%; padding: 5px; margin-right: 5px; }
+    button { padding: 5px 10px; background: lightgray; border: 1px solid gray; cursor: pointer; }
+    ul { padding-left: 20px; }
+    li { margin: 8px 0; padding: 5px; border: 1px solid #ccc; background: #f9f9f9; }
+    .del { margin-left: 10px; color: red; cursor: pointer; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="todo-box">
+    <h3>my todos</h3>
+    <div>
+      <input type="text" id="taskInput" placeholder="enter task">
+      <button id="addBtn">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+    <div id="emptyMsg" style="color:gray;">no tasks</div>
+  </div>
+
+  <script>
+    const input = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const list = document.getElementById('taskList');
+    const emptyMsg = document.getElementById('emptyMsg');
+
+    function updateEmptyMsg() {
+      if (list.children.length === 0) {
+        emptyMsg.style.display = 'block';
+      } else {
+        emptyMsg.style.display = 'none';
+      }
+    }
+
+    function addTask() {
+      const taskText = input.value.trim();
+      if (taskText === '') {
+        input.value = '';
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.style.display = 'flex';
+      li.style.justifyContent = 'space-between';
+      li.style.alignItems = 'center';
+
+      const span = document.createElement('span');
+      span.innerText = taskText;
+
+      const del = document.createElement('span');
+      del.innerText = 'X';
+      del.style.color = 'red';
+      del.style.cursor = 'pointer';
+      del.style.fontWeight = 'bold';
+      del.style.marginLeft = '10px';
+      del.style.border = '1px solid red';
+      del.style.padding = '0 5px';
+
+      del.onclick = function() {
+        li.remove();
+        updateEmptyMsg();
+      };
+
+      li.appendChild(span);
+      li.appendChild(del);
+      list.appendChild(li);
+
+      input.value = '';
+      input.focus();
+      updateEmptyMsg();
+    }
+
+    addBtn.onclick = addTask;
+
+    input.onkeydown = function(e) {
+      if (e.key === 'Enter') {
+        addTask();
+      }
+    };
+
+    updateEmptyMsg();
+  </script>
+</body>
+</html>
