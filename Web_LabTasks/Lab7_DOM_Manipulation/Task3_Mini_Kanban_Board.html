@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini Kanban Board</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { font-size: 24px; margin-bottom: 10px; }
+    form { margin-bottom: 20px; }
+    input, select, button { margin-right: 5px; padding: 5px; }
+    .board { display: flex; gap: 10px; }
+    .column { flex: 1; background: #f5f5f5; padding: 10px; min-height: 300px; }
+    .column h2 { text-align: center; font-size: 14px; margin-top: 0; }
+    .column.drag-over { background: #e0e0e0; }
+    .task { background: white; padding: 8px; margin-bottom: 8px; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: move; position: relative; }
+    .task:hover { background: #e3f2fd; }
+    .task.dragging { opacity: 0.5; }
+    .priority-low { border-left: 4px solid #4caf50; }
+    .priority-medium { border-left: 4px solid #ff9800; }
+    .priority-high { border-left: 4px solid #f44336; }
+    .delete-btn { position: absolute; right: 5px; top: 5px; cursor: pointer; color: #999; font-weight: bold; }
+    .delete-btn:hover { color: #f44336; }
+  </style>
+</head>
+<body>
+  <h1>Kanban Board</h1>
+
+  <form>
+    <input type="text" id="task" placeholder="Task" required />
+    <select id="Priority">
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+    <button id="Add_Task" type="button">Add Task</button>
+  </form>
+
+  <div class="board">
+    <div class="column" id="todo" data-status="todo">
+      <h2>To-Do</h2>
+    </div>
+    <div class="column" id="inprogress" data-status="inprogress">
+      <h2>In Progress</h2>
+    </div>
+    <div class="column" id="done" data-status="done">
+      <h2>Done</h2>
+    </div>
+  </div>
+
+  <script>
+    let draggedTask = null;
+
+    function createTask(text, priority, status) {
+      const task = document.createElement('div');
+      task.className = 'task priority-' + priority.toLowerCase();
+      task.draggable = true;
+      task.dataset.priority = priority;
+      task.dataset.text = text;
+
+      const span = document.createElement('span');
+      span.textContent = text;
+      task.appendChild(span);
+
+      const del = document.createElement('span');
+      del.className = 'delete-btn';
+      del.textContent = '×';
+      del.onclick = function(e) {
+        e.stopPropagation();
+        task.remove();
+        saveTasks();
+      };
+      task.appendChild(del);
+
+      task.addEventListener('dragstart', function(e) {
+        draggedTask = task;
+        task.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      task.addEventListener('dragend', function() {
+        task.classList.remove('dragging');
+        draggedTask = null;
+        document.querySelectorAll('.column').forEach(col => col.classList.remove('drag-over'));
+        saveTasks();
+      });
+
+      return task;
+    }
+
+    document.querySelectorAll('.column').forEach(column => {
+      column.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        column.classList.add('drag-over');
+      });
+
+      column.addEventListener('dragleave', function() {
+        column.classList.remove('drag-over');
+      });
+
+      column.addEventListener('drop', function(e) {
+        e.preventDefault();
+        column.classList.remove('drag-over');
+        if (draggedTask) {
+          column.appendChild(draggedTask);
+          saveTasks();
+        }
+      });
+    });
+
+    document.getElementById('Add_Task').addEventListener('click', function() {
+      const text = document.getElementById('task').value;
+      const priority = document.getElementById('Priority').value;
+
+      if (!text) return;
+
+      const task = createTask(text, priority, 'todo');
+      document.getElementById('todo').appendChild(task);
+
+      document.getElementById('task').value = '';
+      saveTasks();
+    });
+
+    function saveTasks() {
+      const tasks = [];
+      document.querySelectorAll('.column').forEach(col => {
+        const status = col.dataset.status;
+        col.querySelectorAll('.task').forEach(task => {
+          tasks.push({
+            text: task.dataset.text,
+            priority: task.dataset.priority,
+            status: status
+          });
+        });
+      });
+      localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+      const saved = localStorage.getItem('kanbanTasks');
+      if (saved) {
+        const tasks = JSON.parse(saved);
+        tasks.forEach(t => {
+          const task = createTask(t.text, t.priority, t.status);
+          document.getElementById(t.status).appendChild(task);
+        });
+      }
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>

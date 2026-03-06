@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ccc;padding:8px;text-align:left}
+th{cursor:pointer;background:#f0f0f0}
+.child{background:#f9f9f9}
+.low{background:#ffcccc}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<input id="s" placeholder="Search">
+<table>
+<thead>
+<tr>
+<th data-i=0>Student <span></span></th>
+<th data-i=1>Course <span></span></th>
+<th data-i=2>Score <span></span></th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script>
+const d=[
+{n:"Alice",c:[{co:"Math",sc:85},{co:"Physics",sc:48}]},
+{n:"Bob",c:[{co:"Chemistry",sc:92}]},
+{n:"Charlie",c:[{co:"Math",sc:55},{co:"Bio",sc:78},{co:"CS",sc:45}]}
+];
+let sortCol=-1,asc=1,exp=new Set();
+
+function r(){
+$("tbody").empty();
+d.forEach((x,i)=>{
+let a=exp.has(i)?"V":">";
+$("<tr>").html(`<td><span>${a}</span> ${x.n}</td><td></td><td></td>`).click(e=>{if($(e.target).is("span")){t(i)}}).appendTo("tbody");
+if(exp.has(i)){
+x.c.forEach(y=>{
+$("<tr>").addClass("child").addClass(y.sc<50?"low":"").html(`<td></td><td>${y.co}</td><td>${y.sc}</td>`).appendTo("tbody");
+});
+}
+});
+}
+
+function t(i){exp.has(i)?exp.delete(i):exp.add(i);r()}
+
+function av(c){return c.reduce((a,b)=>a+b.sc,0)/c.length}
+
+$("th").click(function(){
+let i=$(this).data("i");
+if(sortCol==i)asc*=-1;
+else{sortCol=i;asc=1}
+if(i==0)d.sort((a,b)=>asc*a.n.localeCompare(b.n));
+if(i==2)d.sort((a,b)=>asc*(av(a.c)-av(b.c)));
+$("th span").text("");
+$(this).find("span").text(asc>0?"^":"V");
+r();
+});
+
+$("#s").on("keyup",function(){
+let q=$(this).val().toLowerCase(),p=-1,show=1;
+$("tbody tr").each(function(){
+let c=$(this).find("td");
+if(c.eq(0).find("span").length){
+p++;
+show=d[p].n.toLowerCase().includes(q)||d[p].c.some(x=>x.co.toLowerCase().includes(q));
+}
+$(this).toggle(show);
+});
+});
+
+r();
+</script>
+</body>
+</html>

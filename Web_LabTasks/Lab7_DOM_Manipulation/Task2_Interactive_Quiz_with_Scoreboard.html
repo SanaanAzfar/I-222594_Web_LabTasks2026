@@ -1,0 +1,87 @@
+<header>
+    <title>Interactive Quiz with Scoreboard</title>
+    <h1>Interactive Quiz with Scoreboard</h1>
+</header>
+<body>
+<div id="questions">
+
+</div>
+<div id="bar" style="background-color: gray; width:350px; height:10px;"></div>
+
+
+<div id="table"></div>
+</body>
+
+
+
+
+<script src="jquery.js"></script>
+<script>
+const quizData = [
+  {
+    id: 1,
+    question: "What is the capital of France?",
+    answer: "Paris",
+    selected: "",
+    options: ["London", "Berlin", "Paris", "Madrid"]
+  },
+  {
+    id: 2,
+    question: "Which planet is known as the Red Planet?",
+    answer: "Mars",
+    selected: "",
+    options: ["Venus", "Mars", "Jupiter", "Saturn"]
+  },
+  {
+    id: 3,
+    question: "What is the largest ocean on Earth?",
+    answer: "Pacific Ocean",
+    selected: "",
+    options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"]
+  },
+  {
+    id: 4,
+    question: "Who painted the Mona Lisa?",
+    answer: "Leonardo da Vinci",
+    selected: "",
+    options: ["Michelangelo", "Leonardo da Vinci", "Raphael", "Vincent van Gogh"]
+  },
+  {
+    id: 5,
+    question: "What is the smallest prime number?",
+    answer: "2",
+    selected: "",
+    options: ["0", "1", "2", "3"]
+  }
+];
+
+$(document).ready(function(){
+var i=0;
+function show(){
+if(i<quizData.length){
+    var question=$('<span>Q'+quizData[i].id+':</span><p>'+quizData[i].question+'</p><button value="'+quizData[i].options[0]+'">'+quizData[i].options[0]+'</button><button value="'+quizData[i].options[1]+'">'+quizData[i].options[1]+'</button><button value="'+quizData[i].options[2]+'">'+quizData[i].options[2]+'</button><button value="'+quizData[i].options[3]+'">'+quizData[i].options[3]+'</button>');
+    $("#questions").html(question);
+}
+else
+{
+var tab=$('<table><tr><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Mark</th></tr></table>');
+quizData.forEach(a=>{
+var mark=(a.answer==a.selected)
+var clr= mark? 'green' : 'red';
+var row=$('<tr style="background-color:'+clr+'"><td>'+a.question+'</td><td>'+a.selected+'</td><td>'+a.answer+'</td><td>'+Number(mark)+'</td></tr>');
+    tab.append(row);
+})
+$("#table").append(tab);
+}
+}
+show();
+$("#questions").on('click','button',function(){
+    quizData[i].selected=$(this).val();
+    var bar =$('<div id="bar" style="background-color: green; width:70px; height:10px; display: inline-block;">');
+    $("#bar").append(bar);
+    i++;
+    show();
+});
+});
+
+</script>

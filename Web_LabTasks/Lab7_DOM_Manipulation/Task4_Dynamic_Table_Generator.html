@@ -1,0 +1,40 @@
+<header>
+  <title>Dynamic Table Generator</title>
+  <h1>Dynamic Table Generator</h1>
+</header>
+<form>
+  <input type="number" id="row" placeholder="Enter rows" required />
+  <input type="number" id="column" placeholder="Enter columns" required />
+  <button id="generate" type="button">Generate Table</button><br/>
+</form>
+
+<div id="table"></div>
+
+<script src="jquery.js"></script>
+<script>
+$("#generate").on('click',function(){
+    var row=$("#row").val();
+    var column=$("#column").val();
+    var tab = $("<table></table>");
+
+    for(var i=1;i<=row;i++) {
+        var tab_r = $("<tr></tr>");
+        for(var j=1;j<=column;j++) {
+            var clr=(i+j)%2? "antiquewhite" : "lightgray";
+            var tab_c = $('<td style="background-color: '+clr+'; width:100px; height: 20px;">'+'('+i+','+j+')'+'</td>');
+
+            tab_c.on('mouseenter', function() {
+                $(this).data('originalColor', $(this).css('background-color'));
+                $(this).css('background-color', 'yellow');
+            });
+            tab_c.on('mouseleave', function() {
+                $(this).css('background-color', $(this).data('originalColor'));
+            });
+
+            tab_r.append(tab_c);
+        }
+        tab.append(tab_r);
+    }
+    $("#table").html(tab);
+});
+</script>
