@@ -82,7 +82,7 @@ export default function AlienSignalDecryption() {
   return (
     <div className="app-container">
       <header>
-        <h1>👽 Alien Signal Decryption Interface</h1>
+        <h1> Alien Signal Decryption Interface</h1>
         <div className="hud">
           <div className="stat-box"> Time: <strong>{time}s</strong></div>
           <div className="stat-box"> Score: <strong>{score}</strong></div>
